@@ -1,7 +1,7 @@
 {
   "name": "Tidrapport Pro",
   "short_name": "Tidrapport",
-  "description": "Tidrapportering med timmar, projekt, arbetsplats och kilometer.",
+  "description": "Tidrapportering med timmar, projekt, parkering och kilometer.",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait",
