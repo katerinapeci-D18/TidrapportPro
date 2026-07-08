@@ -1,3 +1,7 @@
-# Tidrapport Pro 5.0
+# Tidrapport Pro 5.2
 
-Innehåller mina uppgifter, företag, projekt, kunder, arbetsplatser, tidrapport, parkering, trängselskatt, material, PDF, Excel, CSV och säkerhetskopia.
+Nytt:
+- Bilagor/bilder
+- Digital signatur
+- Valfri starttid/sluttid/rast
+- Förbättrad PDF med bilagor och signatur
