@@ -1,13 +1,13 @@
 {
-  "name": "Tidrapport Pro",
-  "short_name": "Tidrapport",
-  "description": "Tidrapportering för bygg och service.",
+  "name": "TimeReport Pro",
+  "short_name": "TimeReport",
+  "description": "International work and time reporting app.",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#1565c0",
-  "lang": "sv",
+  "lang": "en",
   "icons": [
     {
       "src": "icons/icon-192.png",

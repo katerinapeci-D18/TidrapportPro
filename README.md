@@ -1,3 +1,3 @@
-# Tidrapport Pro 7.0
+# TimeReport Pro 8.0
 
-Nytt: timer, GPS-knapp, kamera-capture, fakturaunderlag, timpris, milersättning och bättre PDF.
+International multi-language time reporting app.

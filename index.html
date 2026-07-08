@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Tidrapport Pro 7.0</title>
+<title>TimeReport Pro 8.0</title>
 <meta name="theme-color" content="#1565c0">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
@@ -11,164 +11,211 @@
 <body>
 <div class="app">
 <header class="topbar">
-  <div><h1>📋 Tidrapport Pro</h1><p>Bygg • Service • Entreprenad – v7.0</p></div>
+  <div>
+    <h1>🌍 TimeReport Pro</h1>
+    <p id="subtitle">International Work & Time Tracking</p>
+  </div>
   <button id="themeToggle" class="icon-btn">🌙</button>
 </header>
 
 <main>
-<section id="dashboard" class="page active">
-  <h2>Start</h2>
+<section id="welcomePage" class="page active">
+  <h2 data-i18n="welcome">Välkommen</h2>
+  <p class="hint" data-i18n="welcomeText">Välj språk och skapa din första företagsprofil.</p>
+
+  <label data-i18n="language">Språk</label>
+  <select id="languageSelect">
+    <option value="sv">Svenska</option>
+    <option value="en">English</option>
+    <option value="sq">Shqip</option>
+    <option value="el">Ελληνικά</option>
+    <option value="de">Deutsch</option>
+    <option value="fr">Français</option>
+    <option value="es">Español</option>
+    <option value="it">Italiano</option>
+    <option value="pl">Polski</option>
+    <option value="fi">Suomi</option>
+  </select>
+
+  <label data-i18n="country">Land</label>
+  <input id="country" placeholder="Sweden">
+
+  <label data-i18n="currency">Valuta</label>
+  <select id="currency">
+    <option value="SEK">SEK</option>
+    <option value="EUR">EUR</option>
+    <option value="USD">USD</option>
+    <option value="GBP">GBP</option>
+    <option value="NOK">NOK</option>
+    <option value="DKK">DKK</option>
+  </select>
+
+  <label data-i18n="companyName">Företagsnamn</label>
+  <input id="setupCompanyName" placeholder="My Company">
+
+  <button class="primary" onclick="finishSetup()" data-i18n="startApp">Starta appen</button>
+</section>
+
+<section id="dashboard" class="page">
+  <h2 data-i18n="dashboard">Start</h2>
   <div class="cards">
-    <div class="card"><span>Idag</span><strong id="todayHours">0 h</strong></div>
-    <div class="card"><span>Vecka</span><strong id="weekHours">0 h</strong></div>
-    <div class="card"><span>Månad</span><strong id="monthHours">0 h</strong></div>
-    <div class="card"><span>Kostnader</span><strong id="monthCosts">0 kr</strong></div>
-    <div class="card"><span>Körjournal</span><strong id="driveMonthKm">0 km</strong></div>
-    <div class="card"><span>Beräknad ersättning</span><strong id="monthPay">0 kr</strong></div>
+    <div class="card"><span data-i18n="today">Idag</span><strong id="todayHours">0 h</strong></div>
+    <div class="card"><span data-i18n="week">Vecka</span><strong id="weekHours">0 h</strong></div>
+    <div class="card"><span data-i18n="month">Månad</span><strong id="monthHours">0 h</strong></div>
+    <div class="card"><span data-i18n="costs">Kostnader</span><strong id="monthCosts">0</strong></div>
+    <div class="card"><span data-i18n="mileage">Körjournal</span><strong id="driveMonthKm">0 km</strong></div>
+    <div class="card"><span data-i18n="income">Beräknad ersättning</span><strong id="monthPay">0</strong></div>
   </div>
-
-  <div class="timer-box">
-    <h3>⏱️ Timer</h3>
-    <p id="timerDisplay">00:00:00</p>
-    <div class="row">
-      <button class="primary" onclick="startTimer()">Start</button>
-      <button class="secondary" onclick="stopTimer()">Stopp</button>
-    </div>
-    <button class="secondary" onclick="useTimerHours()">Använd timmar i ny rapport</button>
-  </div>
-
   <div class="quick">
-    <button class="primary" onclick="openPage('reportPage')">➕ Ny tidrapport</button>
-    <button class="secondary" onclick="openPage('drivePage')">🚗 Körjournal</button>
-    <button class="secondary" onclick="openPage('calendarPage')">📅 Kalender</button>
-    <button class="secondary" onclick="openPage('exportPage')">📄 Export</button>
+    <button class="primary" onclick="openPage('reportPage')" data-i18n="newReport">Ny tidrapport</button>
+    <button class="secondary" onclick="openPage('drivePage')" data-i18n="newMileage">Körjournal</button>
+    <button class="secondary" onclick="openPage('calendarPage')" data-i18n="calendar">Kalender</button>
+    <button class="secondary" onclick="openPage('exportPage')" data-i18n="export">Export</button>
   </div>
-  <h3>Senaste rapporter</h3><div id="recentList"></div>
+  <h3 data-i18n="recentReports">Senaste rapporter</h3>
+  <div id="recentList"></div>
 </section>
 
 <section id="reportPage" class="page">
-  <h2 id="reportTitle">Ny tidrapport</h2>
+  <h2 id="reportTitle" data-i18n="newReport">Ny tidrapport</h2>
   <form id="reportForm">
     <input type="hidden" id="editId">
-    <label>Datum<input id="date" type="date" required></label>
-    <label>Företag<select id="companySelect"></select></label>
-    <label>Projekt<select id="projectSelect"></select></label>
-    <label>Kund<select id="customerSelect"></select></label>
-    <label>Arbetsplats<select id="workplaceSelect"></select></label>
-    <button class="secondary" type="button" onclick="fillLocation()">📍 Hämta GPS-position</button>
+    <label><span data-i18n="date">Datum</span><input id="date" type="date" required></label>
+    <label><span data-i18n="company">Företag</span><select id="companySelect"></select></label>
+    <label><span data-i18n="project">Projekt</span><select id="projectSelect"></select></label>
+    <label><span data-i18n="customer">Kund</span><select id="customerSelect"></select></label>
+    <label><span data-i18n="workplace">Arbetsplats</span><select id="workplaceSelect"></select></label>
+    <button class="secondary" type="button" onclick="fillLocation()" data-i18n="gps">Hämta GPS-position</button>
     <small id="gpsInfo"></small>
 
-    <div class="row"><label>Starttid<input id="startTime" type="time"></label><label>Sluttid<input id="endTime" type="time"></label></div>
-    <label>Rast minuter<input id="breakMinutes" type="number" min="0" step="5" placeholder="0"></label>
-    <button class="secondary" type="button" onclick="calculateTimeFromClock()">Beräkna timmar</button>
+    <div class="row">
+      <label><span data-i18n="startTime">Starttid</span><input id="startTime" type="time"></label>
+      <label><span data-i18n="endTime">Sluttid</span><input id="endTime" type="time"></label>
+    </div>
+    <label><span data-i18n="breakMinutes">Rast minuter</span><input id="breakMinutes" type="number" min="0" step="5" placeholder="0"></label>
+    <button class="secondary" type="button" onclick="calculateTimeFromClock()" data-i18n="calculateHours">Beräkna timmar</button>
 
-    <label>Arbetade timmar<input id="hours" type="number" min="0" step="0.25" required placeholder="Ex. 7.5"></label>
-    <label>Timpris / timlön kr<input id="hourRate" type="number" min="0" step="1" placeholder="Valfritt"></label>
-    <label>Kilometer<input id="km" type="number" min="0" step="1" placeholder="0"></label>
-    <label>Milersättning kr/km<input id="kmRate" type="number" min="0" step="0.1" placeholder="Valfritt"></label>
-    <label>Parkering kr<input id="parking" type="number" min="0" step="1" placeholder="0"></label>
-    <label>Trängselskatt kr<input id="toll" type="number" min="0" step="1" placeholder="0"></label>
-    <label>Materialkostnad kr<input id="material" type="number" min="0" step="1" placeholder="0"></label>
-    <label>Bilagor / bilder<input id="attachments" type="file" accept="image/*" multiple capture="environment"></label>
+    <label><span data-i18n="hours">Timmar</span><input id="hours" type="number" min="0" step="0.25" required placeholder="7.5"></label>
+    <label><span data-i18n="hourRate">Timpris/timlön</span><input id="hourRate" type="number" min="0" step="1"></label>
+    <label><span data-i18n="km">Kilometer</span><input id="km" type="number" min="0" step="1"></label>
+    <label><span data-i18n="kmRate">Ersättning per km</span><input id="kmRate" type="number" min="0" step="0.1"></label>
+    <label><span data-i18n="parking">Parkering</span><input id="parking" type="number" min="0" step="1"></label>
+    <label><span data-i18n="toll">Trängselskatt</span><input id="toll" type="number" min="0" step="1"></label>
+    <label><span data-i18n="material">Material</span><input id="material" type="number" min="0" step="1"></label>
+    <label><span data-i18n="attachments">Bilagor/bilder</span><input id="attachments" type="file" accept="image/*" multiple capture="environment"></label>
     <div id="attachmentPreview" class="thumbs"></div>
-    <label>Kommentar<textarea id="comment" rows="4" placeholder="Vad gjorde du?"></textarea></label>
-    <button class="secondary" type="button" onclick="improveComment()">🤖 Förbättra texten</button>
-    <button class="primary" type="submit">💾 Spara</button>
-    <button class="secondary" type="button" onclick="resetReportForm()">Rensa</button>
+    <label><span data-i18n="comment">Kommentar</span><textarea id="comment" rows="4"></textarea></label>
+    <button class="secondary" type="button" onclick="improveComment()" data-i18n="improveText">Förbättra texten</button>
+    <button class="primary" type="submit" data-i18n="save">Spara</button>
+    <button class="secondary" type="button" onclick="resetReportForm()" data-i18n="clear">Rensa</button>
   </form>
 </section>
 
 <section id="drivePage" class="page">
-  <h2>Körjournal</h2>
+  <h2 data-i18n="mileageLog">Körjournal</h2>
   <form id="driveForm">
-    <label>Datum<input id="driveDate" type="date" required></label>
-    <label>Startadress<input id="driveStart" placeholder="Från"></label>
-    <label>Slutadress<input id="driveEnd" placeholder="Till"></label>
-    <button class="secondary" type="button" onclick="fillDriveGps()">📍 Använd GPS som start/slut</button>
-    <label>Syfte<input id="drivePurpose" placeholder="Ex. Arbetsresa till projekt"></label>
-    <label>Kilometer<input id="driveKm" type="number" min="0" step="1" required></label>
-    <label>Ersättning kr/km<input id="driveRate" type="number" min="0" step="0.1" placeholder="Ex. 25"></label>
-    <button class="primary" type="submit">💾 Spara körjournal</button>
+    <label><span data-i18n="date">Datum</span><input id="driveDate" type="date" required></label>
+    <label><span data-i18n="from">Från</span><input id="driveStart"></label>
+    <label><span data-i18n="to">Till</span><input id="driveEnd"></label>
+    <button class="secondary" type="button" onclick="fillDriveGps()" data-i18n="useGps">Använd GPS</button>
+    <label><span data-i18n="purpose">Syfte</span><input id="drivePurpose"></label>
+    <label><span data-i18n="km">Kilometer</span><input id="driveKm" type="number" min="0" step="1" required></label>
+    <label><span data-i18n="kmRate">Ersättning per km</span><input id="driveRate" type="number" min="0" step="0.1"></label>
+    <button class="primary" type="submit" data-i18n="save">Spara</button>
   </form>
-  <h3>Resor</h3><div id="driveList"></div>
+  <h3 data-i18n="trips">Resor</h3><div id="driveList"></div>
 </section>
 
 <section id="calendarPage" class="page">
-  <h2>Kalender</h2>
-  <div class="row"><button class="secondary" onclick="changeMonth(-1)">◀ Föregående</button><button class="secondary" onclick="changeMonth(1)">Nästa ▶</button></div>
+  <h2 data-i18n="calendar">Kalender</h2>
+  <div class="row">
+    <button class="secondary" onclick="changeMonth(-1)" data-i18n="previous">Föregående</button>
+    <button class="secondary" onclick="changeMonth(1)" data-i18n="next">Nästa</button>
+  </div>
   <h3 id="calendarTitle"></h3><div id="calendarGrid" class="calendar"></div>
-  <h3>Vald dag</h3><div id="calendarDayList">Tryck på en dag med rapporter.</div>
+  <h3 data-i18n="selectedDay">Vald dag</h3><div id="calendarDayList"></div>
 </section>
 
 <section id="historyPage" class="page">
-  <h2>Historik</h2>
-  <input id="searchInput" class="search" type="search" placeholder="Sök rapporter...">
-  <div class="row"><label>Från<input id="filterFrom" type="date"></label><label>Till<input id="filterTo" type="date"></label></div>
-  <button class="secondary" onclick="clearFilters()">Rensa filter</button>
+  <h2 data-i18n="history">Historik</h2>
+  <input id="searchInput" class="search" type="search" placeholder="Search...">
+  <div class="row">
+    <label><span data-i18n="from">Från</span><input id="filterFrom" type="date"></label>
+    <label><span data-i18n="to">Till</span><input id="filterTo" type="date"></label>
+  </div>
+  <button class="secondary" onclick="clearFilters()" data-i18n="clearFilters">Rensa filter</button>
   <div id="historyList"></div>
 </section>
 
 <section id="statsPage" class="page">
-  <h2>Statistik</h2>
+  <h2 data-i18n="statistics">Statistik</h2>
   <div class="cards">
-    <div class="card"><span>Totalt timmar</span><strong id="totalHours">0 h</strong></div>
-    <div class="card"><span>Totalt km</span><strong id="totalKm">0 km</strong></div>
-    <div class="card"><span>Parkering</span><strong id="totalParking">0 kr</strong></div>
-    <div class="card"><span>Material</span><strong id="totalMaterial">0 kr</strong></div>
-    <div class="card"><span>Lön/arbete</span><strong id="totalWorkPay">0 kr</strong></div>
-    <div class="card"><span>Milersättning</span><strong id="totalKmPay">0 kr</strong></div>
+    <div class="card"><span data-i18n="totalHours">Totalt timmar</span><strong id="totalHours">0 h</strong></div>
+    <div class="card"><span data-i18n="totalKm">Totalt km</span><strong id="totalKm">0 km</strong></div>
+    <div class="card"><span data-i18n="parking">Parkering</span><strong id="totalParking">0</strong></div>
+    <div class="card"><span data-i18n="material">Material</span><strong id="totalMaterial">0</strong></div>
+    <div class="card"><span data-i18n="workPay">Arbete</span><strong id="totalWorkPay">0</strong></div>
+    <div class="card"><span data-i18n="kmPay">Milersättning</span><strong id="totalKmPay">0</strong></div>
   </div>
-  <h3>Per projekt</h3><div id="projectStats"></div>
-  <h3>Kostnader</h3><div id="costBars" class="bars"></div>
+  <h3 data-i18n="byProject">Per projekt</h3><div id="projectStats"></div>
+  <h3 data-i18n="costs">Kostnader</h3><div id="costBars" class="bars"></div>
 </section>
 
 <section id="exportPage" class="page">
-  <h2>Export</h2>
-  <p class="hint">På Android: välj “Spara som PDF” i utskriftsrutan.</p>
-  <button class="primary" onclick="exportPDF()">📄 Tidrapport PDF</button>
-  <button class="primary" onclick="exportInvoicePDF()">💰 Fakturaunderlag PDF</button>
-  <button class="primary" onclick="exportDrivePDF()">🚗 Körjournal PDF</button>
-  <button class="primary" onclick="exportCSV()">📑 CSV</button>
-  <button class="primary" onclick="exportExcel()">📊 Excel</button>
-  <button class="secondary" onclick="exportBackup()">☁️ Säkerhetskopia JSON</button>
-  <label class="file-label">Importera säkerhetskopia<input type="file" id="backupInput" accept=".json"></label>
+  <h2 data-i18n="export">Export</h2>
+  <p class="hint" data-i18n="pdfHint">På Android: välj Spara som PDF i utskriftsrutan.</p>
+  <button class="primary" onclick="exportPDF()" data-i18n="timesheetPdf">Tidrapport PDF</button>
+  <button class="primary" onclick="exportInvoicePDF()" data-i18n="invoicePdf">Fakturaunderlag PDF</button>
+  <button class="primary" onclick="exportDrivePDF()" data-i18n="mileagePdf">Körjournal PDF</button>
+  <button class="primary" onclick="exportCSV()">CSV</button>
+  <button class="primary" onclick="exportExcel()">Excel</button>
+  <button class="secondary" onclick="exportBackup()" data-i18n="backup">Säkerhetskopia JSON</button>
+  <label class="file-label"><span data-i18n="importBackup">Importera säkerhetskopia</span><input type="file" id="backupInput" accept=".json"></label>
 </section>
 
 <section id="settingsPage" class="page">
-  <h2>Inställningar</h2>
-  <details open><summary>👤 Mina uppgifter</summary>
+  <h2 data-i18n="settings">Inställningar</h2>
+
+  <details open><summary data-i18n="profile">Mina uppgifter</summary>
     <form id="profileForm">
-      <label>Förnamn<input id="firstName"></label><label>Efternamn<input id="lastName"></label>
-      <label>Personnummer<input id="personalNumber" placeholder="Visas maskerat i rapport"></label>
-      <label>Telefon<input id="phone"></label><label>E-post<input id="email"></label>
-      <label>Adress<textarea id="address" rows="2"></textarea></label>
-      <label>Standard timpris/timlön kr<input id="defaultHourRate" type="number" min="0" step="1"></label>
-      <label>Standard milersättning kr/km<input id="defaultKmRate" type="number" min="0" step="0.1"></label>
-      <label>Digital signatur<canvas id="signaturePad" width="320" height="140"></canvas></label>
-      <button class="secondary" type="button" onclick="clearSignature()">Rensa signatur</button>
-      <button class="primary" type="submit">Spara mina uppgifter</button>
+      <label><span data-i18n="firstName">Förnamn</span><input id="firstName"></label>
+      <label><span data-i18n="lastName">Efternamn</span><input id="lastName"></label>
+      <label><span data-i18n="personalNumber">Personnummer</span><input id="personalNumber"></label>
+      <label><span data-i18n="phone">Telefon</span><input id="phone"></label>
+      <label><span data-i18n="email">E-post</span><input id="email"></label>
+      <label><span data-i18n="address">Adress</span><textarea id="address" rows="2"></textarea></label>
+      <label><span data-i18n="defaultHourRate">Standard timpris</span><input id="defaultHourRate" type="number" min="0" step="1"></label>
+      <label><span data-i18n="defaultKmRate">Standard km-ersättning</span><input id="defaultKmRate" type="number" min="0" step="0.1"></label>
+      <label><span data-i18n="signature">Signatur</span><canvas id="signaturePad" width="320" height="140"></canvas></label>
+      <button class="secondary" type="button" onclick="clearSignature()" data-i18n="clearSignature">Rensa signatur</button>
+      <button class="primary" type="submit" data-i18n="save">Spara</button>
     </form>
   </details>
-  <details><summary>🏢 Företag</summary><form id="companyForm"><label>Företagsnamn<input id="companyName" placeholder="Ex. Diga.nu"></label><label>Organisationsnummer<input id="companyOrg"></label><label>E-post<input id="companyEmail"></label><label>Telefon<input id="companyPhone"></label><button class="primary" type="submit">Lägg till företag</button></form><div id="companyList"></div></details>
-  <details><summary>📁 Projekt</summary><form id="projectForm"><label>Projektnummer<input id="projectNumber" placeholder="Ex. P1012"></label><label>Projektnamn<input id="projectName"></label><button class="primary" type="submit">Lägg till projekt</button></form><div id="projectList"></div></details>
-  <details><summary>👥 Kunder</summary><form id="customerForm"><label>Kundnamn<input id="customerName"></label><label>Kontaktperson<input id="customerContact"></label><button class="primary" type="submit">Lägg till kund</button></form><div id="customerList"></div></details>
-  <details><summary>📍 Arbetsplatser</summary><form id="workplaceForm"><label>Namn<input id="workplaceName" placeholder="Ex. Västberga"></label><label>Adress<textarea id="workplaceAddress" rows="2"></textarea></label><button class="primary" type="submit">Lägg till arbetsplats</button></form><div id="workplaceList"></div></details>
-  <details><summary>ℹ️ Appinfo</summary><div class="item"><b>Tidrapport Pro 7.0</b><br>Timer, GPS, kamera, fakturaunderlag, signatur, kalender, körjournal och offline.</div></details>
-  <button class="danger" onclick="confirmClearAll()">🗑️ Radera alla tidrapporter</button>
+
+  <details><summary data-i18n="companies">Företag</summary><form id="companyForm"><label><span data-i18n="companyName">Företagsnamn</span><input id="companyName"></label><label>Org<input id="companyOrg"></label><label>Email<input id="companyEmail"></label><label>Phone<input id="companyPhone"></label><button class="primary" type="submit" data-i18n="add">Lägg till</button></form><div id="companyList"></div></details>
+  <details><summary data-i18n="projects">Projekt</summary><form id="projectForm"><label><span data-i18n="projectNumber">Projektnummer</span><input id="projectNumber"></label><label><span data-i18n="projectName">Projektnamn</span><input id="projectName"></label><button class="primary" type="submit" data-i18n="add">Lägg till</button></form><div id="projectList"></div></details>
+  <details><summary data-i18n="customers">Kunder</summary><form id="customerForm"><label><span data-i18n="customerName">Kundnamn</span><input id="customerName"></label><label><span data-i18n="contact">Kontaktperson</span><input id="customerContact"></label><button class="primary" type="submit" data-i18n="add">Lägg till</button></form><div id="customerList"></div></details>
+  <details><summary data-i18n="workplaces">Arbetsplatser</summary><form id="workplaceForm"><label><span data-i18n="name">Namn</span><input id="workplaceName"></label><label><span data-i18n="address">Adress</span><textarea id="workplaceAddress" rows="2"></textarea></label><button class="primary" type="submit" data-i18n="add">Lägg till</button></form><div id="workplaceList"></div></details>
+
+  <details><summary data-i18n="appInfo">Appinfo</summary><div class="item"><b>TimeReport Pro 8.0</b><br>International app with multiple languages, companies, reports, mileage log, PDF, backup and offline support.</div></details>
+  <button class="danger" onclick="confirmClearAll()" data-i18n="deleteReports">Radera alla tidrapporter</button>
 </section>
 </main>
 
 <nav class="bottom-nav">
-<button onclick="openPage('dashboard')">🏠<span>Start</span></button>
-<button onclick="openPage('reportPage')">➕<span>Ny</span></button>
-<button onclick="openPage('drivePage')">🚗<span>Kör</span></button>
-<button onclick="openPage('calendarPage')">📅<span>Kal.</span></button>
-<button onclick="openPage('historyPage')">📋<span>Hist.</span></button>
-<button onclick="openPage('statsPage')">📊<span>Stat.</span></button>
-<button onclick="openPage('exportPage')">📄<span>Export</span></button>
-<button onclick="openPage('settingsPage')">⚙️<span>Inst.</span></button>
+<button onclick="openPage('dashboard')">🏠<span data-i18n="home">Start</span></button>
+<button onclick="openPage('reportPage')">➕<span data-i18n="new">Ny</span></button>
+<button onclick="openPage('drivePage')">🚗<span data-i18n="drive">Kör</span></button>
+<button onclick="openPage('calendarPage')">📅<span data-i18n="calendarShort">Kal.</span></button>
+<button onclick="openPage('historyPage')">📋<span data-i18n="historyShort">Hist.</span></button>
+<button onclick="openPage('statsPage')">📊<span data-i18n="statsShort">Stat.</span></button>
+<button onclick="openPage('exportPage')">📄<span data-i18n="export">Export</span></button>
+<button onclick="openPage('settingsPage')">⚙️<span data-i18n="settingsShort">Inst.</span></button>
 </nav>
 </div>
-<script src="storage.js"></script><script src="export.js"></script><script src="app.js"></script>
+<script src="i18n.js"></script>
+<script src="storage.js"></script>
+<script src="export.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
