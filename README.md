@@ -1,7 +1,3 @@
-# Tidrapport Pro 5.2
+# Tidrapport Pro 5.3
 
-Nytt:
-- Bilagor/bilder
-- Digital signatur
-- Valfri starttid/sluttid/rast
-- Förbättrad PDF med bilagor och signatur
+Nytt: körjournal, kalenderöversikt, förbättrad dashboard och PDF för körjournal.
