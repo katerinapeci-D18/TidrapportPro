@@ -1,3 +1,3 @@
-# Tidrapport Pro 5.3
+# Tidrapport Pro 6.0
 
-Nytt: körjournal, kalenderöversikt, förbättrad dashboard och PDF för körjournal.
+Ny version med bättre startsida, filter, kalender, körjournal, appinfo och förbättrad statistik.

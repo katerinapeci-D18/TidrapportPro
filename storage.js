@@ -1,4 +1,4 @@
-const DB_KEY="tidrapport_pro_v5_3";
+const DB_KEY="tidrapport_pro_v6";
 function emptyDb(){return{profile:{},companies:[{id:"default-company",name:"Diga.nu",org:"",email:"",phone:""}],projects:[{id:"default-project",number:"P1012",name:"Standardprojekt"}],customers:[],workplaces:[],reports:[],drives:[],settings:{theme:"light"}}}
 function loadDb(){try{return{...emptyDb(),...JSON.parse(localStorage.getItem(DB_KEY)||"{}")}}catch{return emptyDb()}}
 function saveDb(db){localStorage.setItem(DB_KEY,JSON.stringify(db))}
@@ -19,7 +19,7 @@ function deleteDrive(driveId){const db=loadDb();db.drives=db.drives.filter(d=>d.
 function byId(type,itemId){return (loadDb()[type]||[]).find(x=>x.id===itemId)||null}
 function sortedReports(){return getReports().sort((a,b)=>b.date.localeCompare(a.date))}
 function sortedDrives(){return getDrives().sort((a,b)=>b.date.localeCompare(a.date))}
-function total(reports,key){return reports.reduce((s,r)=>s+num(r[key]),0)}
+function total(items,key){return items.reduce((s,r)=>s+num(r[key]),0)}
 function reportCost(r){return num(r.parking)+num(r.toll)+num(r.material)}
 function todayReports(){const t=new Date().toISOString().slice(0,10);return getReports().filter(r=>r.date===t)}
 function monthReports(){const n=new Date();const p=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}`;return getReports().filter(r=>r.date.startsWith(p))}

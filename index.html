@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Tidrapport Pro 5.3</title>
+<title>Tidrapport Pro 6.0</title>
 <meta name="theme-color" content="#1565c0">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
@@ -11,25 +11,28 @@
 <body>
 <div class="app">
 <header class="topbar">
-  <div><h1>📋 Tidrapport Pro</h1><p>Bygg • Service • Entreprenad – v5.3</p></div>
+  <div><h1>📋 Tidrapport Pro</h1><p>Bygg • Service • Entreprenad – v6.0</p></div>
   <button id="themeToggle" class="icon-btn">🌙</button>
 </header>
 
 <main>
 <section id="dashboard" class="page active">
-  <h2>Översikt</h2>
+  <h2>Start</h2>
   <div class="cards">
     <div class="card"><span>Idag</span><strong id="todayHours">0 h</strong></div>
     <div class="card"><span>Vecka</span><strong id="weekHours">0 h</strong></div>
     <div class="card"><span>Månad</span><strong id="monthHours">0 h</strong></div>
     <div class="card"><span>Kostnader</span><strong id="monthCosts">0 kr</strong></div>
-    <div class="card"><span>Körjournal km</span><strong id="driveMonthKm">0 km</strong></div>
-    <div class="card"><span>Rapporter</span><strong id="monthCount">0</strong></div>
+    <div class="card"><span>Körjournal</span><strong id="driveMonthKm">0 km</strong></div>
+    <div class="card"><span>Ersättning</span><strong id="driveMonthPay">0 kr</strong></div>
   </div>
-  <button class="primary" onclick="openPage('reportPage')">➕ Ny tidrapport</button>
-  <button class="secondary" onclick="openPage('drivePage')">🚗 Ny körjournal</button>
-  <h3>Senaste rapporter</h3>
-  <div id="recentList" class="list empty">Inga rapporter ännu.</div>
+  <div class="quick">
+    <button class="primary" onclick="openPage('reportPage')">➕ Ny tidrapport</button>
+    <button class="secondary" onclick="openPage('drivePage')">🚗 Körjournal</button>
+    <button class="secondary" onclick="openPage('calendarPage')">📅 Kalender</button>
+    <button class="secondary" onclick="openPage('exportPage')">📄 Export</button>
+  </div>
+  <h3>Senaste rapporter</h3><div id="recentList"></div>
 </section>
 
 <section id="reportPage" class="page">
@@ -41,13 +44,10 @@
     <label>Projekt<select id="projectSelect"></select></label>
     <label>Kund<select id="customerSelect"></select></label>
     <label>Arbetsplats<select id="workplaceSelect"></select></label>
-    <div class="row">
-      <label>Starttid<input id="startTime" type="time"></label>
-      <label>Sluttid<input id="endTime" type="time"></label>
-    </div>
+    <div class="row"><label>Starttid<input id="startTime" type="time"></label><label>Sluttid<input id="endTime" type="time"></label></div>
     <label>Rast minuter<input id="breakMinutes" type="number" min="0" step="5" placeholder="0"></label>
     <button class="secondary" type="button" onclick="calculateTimeFromClock()">Beräkna timmar</button>
-    <label>Arbetade timmar<input id="hours" type="number" min="0" step="0.25" placeholder="Ex. 7.5" required></label>
+    <label>Arbetade timmar<input id="hours" type="number" min="0" step="0.25" required placeholder="Ex. 7.5"></label>
     <label>Kilometer<input id="km" type="number" min="0" step="1" placeholder="0"></label>
     <label>Parkering kr<input id="parking" type="number" min="0" step="1" placeholder="0"></label>
     <label>Trängselskatt kr<input id="toll" type="number" min="0" step="1" placeholder="0"></label>
@@ -63,7 +63,6 @@
 <section id="drivePage" class="page">
   <h2>Körjournal</h2>
   <form id="driveForm">
-    <input type="hidden" id="driveEditId">
     <label>Datum<input id="driveDate" type="date" required></label>
     <label>Startadress<input id="driveStart" placeholder="Från"></label>
     <label>Slutadress<input id="driveEnd" placeholder="Till"></label>
@@ -72,24 +71,25 @@
     <label>Ersättning kr/km<input id="driveRate" type="number" min="0" step="0.1" placeholder="Ex. 25"></label>
     <button class="primary" type="submit">💾 Spara körjournal</button>
   </form>
-  <h3>Resor</h3>
-  <div id="driveList"></div>
+  <h3>Resor</h3><div id="driveList"></div>
 </section>
 
 <section id="calendarPage" class="page">
   <h2>Kalender</h2>
-  <div class="row">
-    <button class="secondary" onclick="changeMonth(-1)">◀ Föregående</button>
-    <button class="secondary" onclick="changeMonth(1)">Nästa ▶</button>
-  </div>
-  <h3 id="calendarTitle"></h3>
-  <div id="calendarGrid" class="calendar"></div>
+  <div class="row"><button class="secondary" onclick="changeMonth(-1)">◀ Föregående</button><button class="secondary" onclick="changeMonth(1)">Nästa ▶</button></div>
+  <h3 id="calendarTitle"></h3><div id="calendarGrid" class="calendar"></div>
+  <h3>Vald dag</h3><div id="calendarDayList">Tryck på en dag med rapporter.</div>
 </section>
 
 <section id="historyPage" class="page">
   <h2>Historik</h2>
   <input id="searchInput" class="search" type="search" placeholder="Sök rapporter...">
-  <div id="historyList" class="list empty">Inga rapporter ännu.</div>
+  <div class="row">
+    <label>Från<input id="filterFrom" type="date"></label>
+    <label>Till<input id="filterTo" type="date"></label>
+  </div>
+  <button class="secondary" onclick="clearFilters()">Rensa filter</button>
+  <div id="historyList"></div>
 </section>
 
 <section id="statsPage" class="page">
@@ -101,11 +101,12 @@
     <div class="card"><span>Material</span><strong id="totalMaterial">0 kr</strong></div>
   </div>
   <h3>Per projekt</h3><div id="projectStats"></div>
+  <h3>Kostnader</h3><div id="costBars" class="bars"></div>
 </section>
 
 <section id="exportPage" class="page">
   <h2>Export</h2>
-  <p class="hint">PDF: välj “Spara som PDF” i utskriftsrutan på Android.</p>
+  <p class="hint">På Android: välj “Spara som PDF” i utskriftsrutan.</p>
   <button class="primary" onclick="exportPDF()">📄 Tidrapport PDF</button>
   <button class="primary" onclick="exportDrivePDF()">🚗 Körjournal PDF</button>
   <button class="primary" onclick="exportCSV()">📑 CSV</button>
@@ -116,14 +117,11 @@
 
 <section id="settingsPage" class="page">
   <h2>Inställningar</h2>
-  <details open>
-    <summary>👤 Mina uppgifter</summary>
+  <details open><summary>👤 Mina uppgifter</summary>
     <form id="profileForm">
-      <label>Förnamn<input id="firstName"></label>
-      <label>Efternamn<input id="lastName"></label>
+      <label>Förnamn<input id="firstName"></label><label>Efternamn<input id="lastName"></label>
       <label>Personnummer<input id="personalNumber" placeholder="Visas maskerat i rapport"></label>
-      <label>Telefon<input id="phone"></label>
-      <label>E-post<input id="email"></label>
+      <label>Telefon<input id="phone"></label><label>E-post<input id="email"></label>
       <label>Adress<textarea id="address" rows="2"></textarea></label>
       <label>Digital signatur<canvas id="signaturePad" width="320" height="140"></canvas></label>
       <button class="secondary" type="button" onclick="clearSignature()">Rensa signatur</button>
@@ -134,6 +132,7 @@
   <details><summary>📁 Projekt</summary><form id="projectForm"><label>Projektnummer<input id="projectNumber" placeholder="Ex. P1012"></label><label>Projektnamn<input id="projectName"></label><button class="primary" type="submit">Lägg till projekt</button></form><div id="projectList"></div></details>
   <details><summary>👥 Kunder</summary><form id="customerForm"><label>Kundnamn<input id="customerName"></label><label>Kontaktperson<input id="customerContact"></label><button class="primary" type="submit">Lägg till kund</button></form><div id="customerList"></div></details>
   <details><summary>📍 Arbetsplatser</summary><form id="workplaceForm"><label>Namn<input id="workplaceName" placeholder="Ex. Västberga"></label><label>Adress<textarea id="workplaceAddress" rows="2"></textarea></label><button class="primary" type="submit">Lägg till arbetsplats</button></form><div id="workplaceList"></div></details>
+  <details><summary>ℹ️ Appinfo</summary><div class="item"><b>Tidrapport Pro 6.0</b><br>Funktioner: tidrapport, bilagor, signatur, kalender, körjournal, PDF, Excel, CSV och offline.</div></details>
   <button class="danger" onclick="confirmClearAll()">🗑️ Radera alla tidrapporter</button>
 </section>
 </main>
@@ -149,8 +148,6 @@
 <button onclick="openPage('settingsPage')">⚙️<span>Inst.</span></button>
 </nav>
 </div>
-<script src="storage.js"></script>
-<script src="export.js"></script>
-<script src="app.js"></script>
+<script src="storage.js"></script><script src="export.js"></script><script src="app.js"></script>
 </body>
 </html>
