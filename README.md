@@ -1,3 +1,3 @@
-# Tidrapport Pro v3
+# Tidrapport Pro 5.0
 
-Uppdaterad version med parkering och förbättrad PDF/CSV/Excel-export.
+Innehåller mina uppgifter, företag, projekt, kunder, arbetsplatser, tidrapport, parkering, trängselskatt, material, PDF, Excel, CSV och säkerhetskopia.
