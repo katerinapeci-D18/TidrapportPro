@@ -1,0 +1,19 @@
+{
+  "dashboard": "Start",
+  "new_report": "Ny tidrapport",
+  "mileage_log": "Körjournal",
+  "time_report": "Tidrapport",
+  "hours": "Timmar",
+  "invalid_hours": "Ange giltigt antal timmar",
+  "comment": "Kommentar",
+  "save": "Spara",
+  "from": "Från",
+  "to": "Till",
+  "kilometers": "Kilometer",
+  "companies": "Företag",
+  "projects": "Projekt",
+  "customers": "Kunder",
+  "settings": "Inställningar",
+  "coming_soon": "Kommer snart",
+  "foundation_ready": "Grunden är klar. Funktionen byggs i nästa sprint."
+}

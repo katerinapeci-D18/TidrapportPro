@@ -1,0 +1,19 @@
+{
+  "dashboard": "Dashboard",
+  "new_report": "New report",
+  "mileage_log": "Mileage log",
+  "time_report": "Time report",
+  "hours": "Hours",
+  "invalid_hours": "Enter valid hours",
+  "comment": "Comment",
+  "save": "Save",
+  "from": "From",
+  "to": "To",
+  "kilometers": "Kilometers",
+  "companies": "Companies",
+  "projects": "Projects",
+  "customers": "Customers",
+  "settings": "Settings",
+  "coming_soon": "Coming soon",
+  "foundation_ready": "The foundation is ready. This feature is built in the next sprint."
+}

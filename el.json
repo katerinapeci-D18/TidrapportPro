@@ -1,0 +1,19 @@
+{
+  "dashboard": "Πίνακας",
+  "new_report": "Νέα αναφορά",
+  "mileage_log": "Ημερολόγιο χιλιομέτρων",
+  "time_report": "Αναφορά χρόνου",
+  "hours": "Ώρες",
+  "invalid_hours": "Εισαγάγετε έγκυρες ώρες",
+  "comment": "Σχόλιο",
+  "save": "Αποθήκευση",
+  "from": "Από",
+  "to": "Προς",
+  "kilometers": "Χιλιόμετρα",
+  "companies": "Εταιρείες",
+  "projects": "Έργα",
+  "customers": "Πελάτες",
+  "settings": "Ρυθμίσεις",
+  "coming_soon": "Σύντομα",
+  "foundation_ready": "Η βάση είναι έτοιμη. Η λειτουργία θα κατασκευαστεί στο επόμενο sprint."
+}

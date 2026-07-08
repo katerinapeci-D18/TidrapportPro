@@ -1,0 +1,19 @@
+{
+  "dashboard": "Paneli",
+  "new_report": "Raport i ri",
+  "mileage_log": "Regjistri i udhëtimeve",
+  "time_report": "Raporti i kohës",
+  "hours": "Orë",
+  "invalid_hours": "Shkruani orë të vlefshme",
+  "comment": "Koment",
+  "save": "Ruaj",
+  "from": "Nga",
+  "to": "Deri",
+  "kilometers": "Kilometra",
+  "companies": "Kompani",
+  "projects": "Projekte",
+  "customers": "Klientë",
+  "settings": "Cilësime",
+  "coming_soon": "Së shpejti",
+  "foundation_ready": "Baza është gati. Funksioni ndërtohet në sprintin tjetër."
+}
